@@ -9,7 +9,16 @@ type Props = { params: { slug: string } };
 export default async function SnippetPage({ params }: Props) {
   const { slug } = await params;
   await connectDB();
-  const snippet = await SnippetModel.findOne({ slug }).lean();
+  type Snippet = {
+    title: string;
+    description: string;
+    tags: string[];
+    language: string;
+    code: string;
+    slug: string;
+  };
+
+  const snippet = await SnippetModel.findOne({ slug }).lean<Snippet>();
 
   if (!snippet) notFound();
 
