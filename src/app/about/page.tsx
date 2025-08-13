@@ -36,7 +36,7 @@ export default function AboutPage() {
           Constructs cognitive scaffolding before filling in the details.
         </p>
         <p className="mb-3">
-          Has passion for 'connecting disciplines into a unified whole'.
+          Has passion for &apos;connecting disciplines into a unified whole&apos;.
         </p>
         <p className="mb-3">Driven by systematicity.</p>
       </div>
