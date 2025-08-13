@@ -13,6 +13,7 @@ export default async function HomePage() {
       slug: s.slug,
       title: s.title,
       language: s.language,
+      description: s.description,
       tags: s.tags,
       code: s.code,
     })
