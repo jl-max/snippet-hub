@@ -16,9 +16,9 @@ interface Snippet {
 export default async function SnippetPage({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
-  const { slug } = params;
+  const { slug } = await params;
   await connectDB();
   const snippet = await SnippetModel.findOne({ slug }).lean<Snippet>();
 
