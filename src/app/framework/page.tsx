@@ -1,21 +1,30 @@
-import TopTabs from "@/components/TopTabs";
+import SidebarLayout from "@/components/SidebarLayout";
+import MarkdownEditor from "@/components/MarkdownEditor";
+import MarkdownViewer from "@/components/MarkdownViewer";
 
-export default async function FramworkReact() {
-  const tabs = [
-    { label: "Component", content: <p>这里是个人信息</p> },
-    { label: "Data flow", content: <p>这里是账号设置</p> },
-    { label: "State management", content: <p>这里是安全中心</p> },
-    { label: "React Router", content: <p>这里是安全中心</p> },
-    { label: "CSS", content: <p>这里是安全中心</p> },
-    { label: "Optimization", content: <p>这里是安全中心</p> },
-  ];
+const labels = [
+  "Data flow",
+  "State management",
+  "React Router",
+  "CSS",
+  "Optimization",
+];
+
+export default function Framwork() {
+  const tabs = labels.map((topic) => ({
+    label: topic,
+    content: <MarkdownViewer topic={topic} />,
+  }));
+  tabs.unshift({ label: "Add Note", content: <MarkdownEditor /> });
 
   return (
     <div className="h-full p-4 bg-slate-100">
       <div className="h-60 flex items-center justify-center">
-        <h1 className="font-serif font-bold text-6xl text-blue-400">React</h1>
+        <h1 className="font-serif font-bold text-6xl text-blue-400 pointer-events-none">
+          React
+        </h1>
       </div>
-      <TopTabs tabs={tabs} />
+      <SidebarLayout items={tabs} />
     </div>
   );
 }

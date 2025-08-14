@@ -1,5 +1,6 @@
 "use client";
-import { useState, ReactNode } from "react";
+import { useState, useEffect, ReactNode } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface SidebarLayoutProps {
   items: { label: string; content: ReactNode }[];
@@ -9,52 +10,54 @@ export default function SidebarLayout({ items }: SidebarLayoutProps) {
   const [active, setActive] = useState(0);
   const [open, setOpen] = useState(true);
 
+  useEffect(() => {
+    const mql = window.matchMedia("(min-width: 768px)");
+    const handler = () => setOpen(mql.matches);
+    handler();
+    mql.addEventListener("change", handler);
+    return () => mql.removeEventListener("change", handler);
+  }, []);
+
   return (
     <div className="flex h-screen">
-      {/* 左侧导航 */}
-      <aside
-        className={`
-        relative          /* 让按钮绝对定位相对于它 */
-        flex flex-col bg-slate-100 text-slate-800
-        transition-all duration-300 ease-in-out
-        ${open ? "w-64" : "w-20"}
-      `}
+      <button
+        onClick={() => setOpen(!open)}
+        className="p-2 rounded-l-xl bg-blue-200 hover:bg-slate-200 transition-colors"
       >
-        {/* 所有菜单选项 */}
-        {items.map((item, idx) => (
-          <button
-            key={idx}
-            onClick={() => setActive(idx)}
-            className={`
-            px-4 py-3 text-left transition-colors
+        {open ? (
+          <ChevronLeft className="w-5 h-5" />
+        ) : (
+          <ChevronRight className="w-5 h-5" />
+        )}
+      </button>
+
+      {open && (
+        <aside
+          className={`
+            relative flex flex-col bg-slate-100 text-slate-800
+            transition-[width] duration-300 ease-in-out overflow-hidden
+            ${open ? "w-64" : "w-0"} md:w-64`}
+        >
+          {items.map((item, idx) => (
+            <button
+              key={idx}
+              onClick={() => setActive(idx)}
+              className={`
+            flex items-center px-4 py-3 whitespace-nowrap
+            transition-colors duration-200
             ${
               active === idx
-                ? "bg-white text-yellow-500 border-r-2 border-blue-600"
-                : "hover:bg-slate-200"
+                ? "bg-white text-yellow-500 font-medium border-r-2 border-blue-600"
+                : "hover:bg-slate-200/50"
             }
-            ${open ? "" : "justify-center"}  /* 收起时文字居中 */
           `}
-          >
-            {open ? item.label : ""}
-          </button>
-        ))}
+            >
+              {item.label}
+            </button>
+          ))}
+        </aside>
+      )}
 
-        {/* 圆形按钮：固定在左下角 */}
-        <button
-          onClick={() => setOpen(!open)}
-          className="
-          float top-4 left-4           /* 左下角 */
-          w-10 h-10 rounded-full bg-blue-600
-          text-white flex items-center justify-center
-          hover:bg-blue-700 transition-colors
-          shadow-md
-        "
-        >
-          {open ? "‹" : "›"} {/* 或 ← / → */}
-        </button>
-      </aside>
-
-      {/* 右侧内容保持不变 */}
       <main className="flex-1 p-6 overflow-auto bg-white">
         {items[active].content}
       </main>

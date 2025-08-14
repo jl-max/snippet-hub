@@ -15,7 +15,7 @@ export default function TopTabs({ tabs }: TopTabsProps) {
 
   return (
     <div className="flex flex-col h-full w-full">
-      <div className="flex-none flex flex-wrap w-full border-b border-slate-300 bg-white">
+      <div className="flex-none flex flex-wrap w-full border-b border-slate-300 bg-white rounded-t-xl">
         {tabs.map((tab, idx) => (
           <button
             key={idx}
@@ -23,7 +23,7 @@ export default function TopTabs({ tabs }: TopTabsProps) {
             className={`
               font-mono
               px-4 py-3 -mb-px
-              text-sm font-medium
+              text-base font-medium
               border-b-2
               transition-colors
               focus:outline-none

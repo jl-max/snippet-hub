@@ -24,13 +24,11 @@ export default function SiteHeader() {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-slate-800 text-white">
-      {/* 外层不再限制高度 */}
       <div className="font-mono max-w-6xl mx-auto px-4 min-h-16 flex items-center justify-between">
         <Link href="/" className="text-2xl font-bold m-2 hover:text-yellow-300">
           Snippets Hub
         </Link>
 
-        {/* 桌面端 */}
         <nav className="hidden md:flex gap-4">
           {navItems.map(({ label, href }) => (
             <Link
@@ -45,7 +43,6 @@ export default function SiteHeader() {
           ))}
         </nav>
 
-        {/* 手机端汉堡按钮 */}
         <div className="flex md:hidden">
           <button
             onClick={() => setOpen(!open)}
@@ -68,7 +65,6 @@ export default function SiteHeader() {
           </button>
         </div>
 
-        {/* 下拉菜单：绝对定位，宽度同 header */}
         {open && (
           <nav className="md:hidden absolute top-full left-0 right-0 bg-slate-800 text-white ml-3 flex flex-col gap-2 p-4 z-50">
             {navItems.map(({ label, href }) => (

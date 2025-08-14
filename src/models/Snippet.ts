@@ -1,4 +1,4 @@
-import { Schema, model, models } from 'mongoose'
+import { Schema, model, models } from "mongoose";
 
 const snippetSchema = new Schema(
   {
@@ -10,7 +10,6 @@ const snippetSchema = new Schema(
     code: { type: String, required: true },
   },
   { timestamps: true }
-)
+);
 
-export const SnippetModel =
-  models.Snippet || model('Snippet', snippetSchema)
+export const SnippetModel = models.Snippet || model("Snippet", snippetSchema);

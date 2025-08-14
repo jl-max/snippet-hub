@@ -97,7 +97,6 @@ export default function SnippetForm({
   );
 }
 
-/* 小小工具组件，按需复制 */
 const InputField = ({ label, ...props }: any) => (
   <div>
     <label className="block mb-1 font-medium">{label}</label>

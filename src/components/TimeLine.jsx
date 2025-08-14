@@ -4,25 +4,19 @@ import { useState } from "react";
 import useDelayedHover from "../hooks/useDelayedHover";
 
 function TimeLine({
-  startYear,
-  onYearClick,
-  endYear = new Date().getFullYear(),
+  timeNodes,
+  onNodeClick
 }) {
-  const years = [];
-  for (let year = startYear; year <= endYear; year++) {
-    years.push(year);
-  }
-
   const { idx, enter, leave } = useDelayedHover();
-  const [activeIdx, setActiveIdx] = useState(years.length - 1);
-  const handleClick = (year, i) => {
+  const [activeIdx, setActiveIdx] = useState(0);
+  const handleClick = (timeNode, i) => {
     setActiveIdx((prev) => (prev === i ? null : i));
-    onYearClick(year);
+    onNodeClick(timeNode);
   };
 
   return (
-    <div className="flex flex-col-reverse justify-between gap-[15px] hover:cursor-pointer">
-      {years.map((year, i) => {
+    <div className="flex flex-col justify-between gap-[15px] hover:cursor-pointer">
+      {timeNodes.map((timeNode, i) => {
         const distance = idx === null ? Infinity : Math.abs(i - idx);
         let scale = 0.6;
         if (distance === 0) scale = 1.5;
@@ -43,9 +37,9 @@ function TimeLine({
               }}
               onMouseEnter={() => enter(i)}
               onMouseLeave={leave}
-              onClick={() => handleClick(year, i)}
+              onClick={() => handleClick(timeNode, i)}
             ></div>
-            {isActive && <span className="absolute left-[80px] font-semibold text-yellow-400 text-sm leading-[5px]">{year}</span>}
+            {isActive && <span className="absolute left-[80px] font-semibold text-yellow-400 text-sm leading-[5px]">{timeNode}</span>}
           </div>
         );
       })}

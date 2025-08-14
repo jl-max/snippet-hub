@@ -1,4 +1,3 @@
-// src/app/api/snippets/[slug]/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/db";
 import { SnippetModel } from "@/models/Snippet";
