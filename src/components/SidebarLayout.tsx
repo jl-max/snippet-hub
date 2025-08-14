@@ -1,12 +1,13 @@
 "use client";
-import { useState, useEffect, ReactNode } from "react";
+import { useState, useEffect, ReactNode, Suspense } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import ErrorBoundary from "@/components/ErrorBoundary";
 
 interface SidebarLayoutProps {
-  items: { label: string; content: ReactNode }[];
+  tabs: { label: string; content: ReactNode }[];
 }
 
-export default function SidebarLayout({ items }: SidebarLayoutProps) {
+export default function SidebarLayout({ tabs }: SidebarLayoutProps) {
   const [active, setActive] = useState(0);
   const [open, setOpen] = useState(true);
 
@@ -38,12 +39,12 @@ export default function SidebarLayout({ items }: SidebarLayoutProps) {
             transition-[width] duration-300 ease-in-out overflow-hidden
             ${open ? "w-64" : "w-0"} md:w-64`}
         >
-          {items.map((item, idx) => (
+          {tabs.map((item, idx) => (
             <button
               key={idx}
               onClick={() => setActive(idx)}
               className={`
-            flex items-center px-4 py-3 whitespace-nowrap
+            flex tabs-center px-4 py-3 whitespace-nowrap
             transition-colors duration-200
             ${
               active === idx
@@ -59,7 +60,11 @@ export default function SidebarLayout({ items }: SidebarLayoutProps) {
       )}
 
       <main className="flex-1 p-6 overflow-auto bg-white">
-        {items[active].content}
+        <ErrorBoundary>
+          <Suspense fallback={<div>Loading...</div>}>
+            {tabs[active].content}
+          </Suspense>
+        </ErrorBoundary>
       </main>
     </div>
   );

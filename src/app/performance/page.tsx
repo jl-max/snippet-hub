@@ -1,4 +1,4 @@
-import TopTabs from "@/components/TopTabs";
+import TopbarLayout from "@/components/TopbarLayout";
 
 export default async function Performance() {
   const tabs = [
@@ -12,10 +12,14 @@ export default async function Performance() {
   return (
     <div className="h-full p-4 bg-slate-100">
       <div className="h-60 flex flex-col items-center justify-center">
-        <h1 className="font-serif font-bold text-6xl text-green-400 pointer-events-none">Performance</h1>
-        <h6 className="font-mono text-sm text-green-600 mt-2">resources downloading | page parsing</h6>
+        <h1 className="font-serif font-bold text-6xl text-green-400 pointer-events-none">
+          Performance
+        </h1>
+        <h6 className="font-mono text-sm text-green-600 mt-2">
+          resources downloading | page parsing
+        </h6>
       </div>
-      <TopTabs tabs={tabs} />
+      <TopbarLayout tabs={tabs} />
     </div>
   );
 }

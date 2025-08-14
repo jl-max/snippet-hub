@@ -1,6 +1,6 @@
 import SidebarLayout from "@/components/SidebarLayout";
 import MarkdownEditor from "@/components/MarkdownEditor";
-import MarkdownViewer from "@/components/MarkdownViewer";
+import { NotesOnTopic } from "@/components/MarkdownViewer";
 
 const labels = [
   "Data flow",
@@ -13,7 +13,7 @@ const labels = [
 export default function Framwork() {
   const tabs = labels.map((topic) => ({
     label: topic,
-    content: <MarkdownViewer topic={topic} />,
+    content: <NotesOnTopic topic={topic} />,
   }));
   tabs.unshift({ label: "Add Note", content: <MarkdownEditor /> });
 
@@ -24,7 +24,7 @@ export default function Framwork() {
           React
         </h1>
       </div>
-      <SidebarLayout items={tabs} />
+      <SidebarLayout tabs={tabs} />
     </div>
   );
 }

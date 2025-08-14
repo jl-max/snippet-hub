@@ -1,16 +1,17 @@
 "use client";
-import { useState, ReactNode } from "react";
+import { useState, ReactNode, Suspense } from "react";
+import ErrorBoundary from "@/components/ErrorBoundary";
 
 interface TabItem {
   label: string;
   content: ReactNode;
 }
 
-interface TopTabsProps {
+interface TopbarLayoutProps {
   tabs: TabItem[];
 }
 
-export default function TopTabs({ tabs }: TopTabsProps) {
+export default function TopbarLayout({ tabs }: TopbarLayoutProps) {
   const [active, setActive] = useState(0);
 
   return (
@@ -40,7 +41,11 @@ export default function TopTabs({ tabs }: TopTabsProps) {
       </div>
 
       <div className="flex-1 overflow-auto p-4 bg-white">
-        {tabs[active].content}
+        <ErrorBoundary>
+          <Suspense fallback={<div>Loading...</div>}>
+            {tabs[active].content}
+          </Suspense>
+        </ErrorBoundary>
       </div>
     </div>
   );

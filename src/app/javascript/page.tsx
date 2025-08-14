@@ -1,18 +1,20 @@
-import TopTabs from "@/components/TopTabs";
+import TopbarLayout from "@/components/TopbarLayout";
 import StickyNoteGrid from "@/components/StickyNote";
 
+const labels = [
+  "Object",
+  "Function",
+  "Extends",
+  "Array",
+  "Regular expression",
+  "Method",
+];
+
 export default async function Foundation() {
-  const tabs = [
-    {
-      label: "Object",
-      content: <StickyNoteGrid label="Object"/>,
-    },
-    { label: "Function", content: <StickyNoteGrid label="Function"/> },
-    { label: "Extends", content: <StickyNoteGrid label="Extends"/> },
-    { label: "Array", content: <StickyNoteGrid label="Array"/> },
-    { label: "Regular expression", content: <StickyNoteGrid label="Regular expression"/> },
-    { label: "Method", content: <StickyNoteGrid label="Method"/> },
-  ];
+    const tabs = labels.map((topic) => ({
+    label: topic,
+    content: <StickyNoteGrid label={topic} />,
+  }));
 
   return (
     <div className="h-full p-4 bg-slate-100">
@@ -21,7 +23,7 @@ export default async function Foundation() {
           JavaScript
         </h1>
       </div>
-      <TopTabs tabs={tabs} />
+      <TopbarLayout tabs={tabs} />
     </div>
   );
 }

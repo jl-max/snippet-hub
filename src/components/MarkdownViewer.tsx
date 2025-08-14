@@ -1,7 +1,8 @@
 "use client";
-import { useState, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import { Trash2 } from "lucide-react";
+import Fetch from "@/components/Fetch";
+import { useFetch } from "@/hooks/hooks";
 
 interface Note {
   _id: string;
@@ -14,33 +15,24 @@ interface MarkdownViewerProps {
   topic: string;
 }
 
-const MarkdownViewer = ({ topic }: MarkdownViewerProps) => {
-  const [notes, setNotes] = useState<Note[]>([]);
+export const NotesOnTopic = ({ topic }: MarkdownViewerProps) => {
+  return (
+    <Fetch
+      uri="/api/notes"
+      renderSuccess={MarkdownViewer}
+      renderError={(error) => {
+        return <p>Something went wrong...{error.message}</p>;
+      }}
+      filter={(notes: Note[]) => notes.filter((n) => n.topic === topic)}
+    />
+  );
+};
 
-  const fetchNotes = async () => {
-    try {
-      const res = await fetch("/api/notes");
-      if (!res.ok) throw new Error("Failed to fetch");
-      const allNotes = await res.json();
-      setNotes(allNotes.filter((note: Note) => note.topic === topic));
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  useEffect(() => {
-    fetchNotes();
-  }, [notes]);
-
-  const handleDelete = (id: string) => {
-    if (!confirm("Sure to delete?")) return;
-    setNotes(notes.filter((note) => note._id !== id));
-  };
-
+export const MarkdownViewer = ({ data }: { data: Note[] }) => {
   return (
     <div className="space-y-4">
-      {notes.length !== 0 ? (
-        notes.map((note) => (
+      {data.length !== 0 ? (
+        data.map((note: Note) => (
           <div
             key={note._id}
             className="relative group rounded-lg border p-4 bg-white shadow-sm"
@@ -48,7 +40,6 @@ const MarkdownViewer = ({ topic }: MarkdownViewerProps) => {
             <h3 className="font-semibold text-lg mb-2">{note.topic}</h3>
 
             <button
-              onClick={handleDelete}
               className="absolute top-3 right-3 p-1.5 text-red-500 hover:bg-red-50 rounded-full"
               aria-label="delete note"
             >
@@ -72,5 +63,3 @@ const MarkdownViewer = ({ topic }: MarkdownViewerProps) => {
     </div>
   );
 };
-
-export default MarkdownViewer;
