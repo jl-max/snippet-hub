@@ -1,8 +1,9 @@
 import SidebarLayout from "@/components/SidebarLayout";
 import MarkdownEditor from "@/components/MarkdownEditor";
-import { NotesOnTopic } from "@/components/MarkdownViewer";
+import { NotesOnTopic } from "@/components/NotesOnTopic";
 
 const labels = [
+  "Component",
   "Data flow",
   "State management",
   "React Router",

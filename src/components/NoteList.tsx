@@ -1,7 +1,6 @@
 "use client";
 import ReactMarkdown from "react-markdown";
 import { Trash2 } from "lucide-react";
-import { useNotesSWR } from "@/hooks/useNotesSWR";
 
 interface Note {
   _id: string;
@@ -9,27 +8,6 @@ interface Note {
   content: string;
   createdAt?: string;
 }
-
-interface NoteBlockProps {
-  topic: string;
-}
-
-export const NotesOnTopic = ({ topic }: NoteBlockProps) => {
-  const { notes, error, mutate } = useNotesSWR();
-
-  if (error) return <p>Something went wrong...</p>;
-
-  const filtered = notes.filter((n: Note) => n.topic === topic);
-
-  return (
-    <NoteList
-      data={filtered}
-      onDelete={async () => {
-        await mutate();
-      }}
-    />
-  );
-};
 
 export const NoteList = ({
   data,

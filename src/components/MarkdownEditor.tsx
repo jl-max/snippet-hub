@@ -9,6 +9,7 @@ interface Note {
 }
 
 const options: string[] = [
+  "Component",
   "Data flow",
   "State management",
   "React Router",
