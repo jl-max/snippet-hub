@@ -11,7 +11,7 @@ const labels = [
 ];
 
 export default async function Foundation() {
-    const tabs = labels.map((topic) => ({
+  const tabs = labels.map((topic) => ({
     label: topic,
     content: <StickyNoteGrid label={topic} />,
   }));

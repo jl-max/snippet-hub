@@ -1,13 +1,19 @@
 import TopbarLayout from "@/components/TopbarLayout";
+import StickyNoteGrid from "@/components/StickyNote";
+
+const labels = [
+  "Compressing",
+  "Reducing",
+  "Caching",
+  "Rendering",
+  "Monitoring",
+];
 
 export default async function Performance() {
-  const tabs = [
-    { label: "Compressing", content: <p>这里是个人信息</p> },
-    { label: "Reducing", content: <p>这里是账号设置</p> },
-    { label: "Caching", content: <p>这里是账号设置</p> },
-    { label: "Rendering", content: <p>这里是账号设置</p> },
-    { label: "Monitoring", content: <p>这里是安全中心</p> },
-  ];
+  const tabs = labels.map((topic) => ({
+    label: topic,
+    content: <StickyNoteGrid label={topic} noteBgColor="bg-green-100"/>,
+  }));
 
   return (
     <div className="h-full p-4 bg-slate-100">

@@ -16,7 +16,7 @@ export default function TopbarLayout({ tabs }: TopbarLayoutProps) {
 
   return (
     <div className="flex flex-col h-full w-full">
-      <div className="flex-none flex flex-wrap w-full border-b border-slate-300 bg-white rounded-t-xl">
+      <div className="flex-none flex flex-wrap justify-center w-full border-b border-slate-300 bg-white rounded-t-xl">
         {tabs.map((tab, idx) => (
           <button
             key={idx}

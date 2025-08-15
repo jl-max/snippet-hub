@@ -8,7 +8,7 @@ export async function GET() {
   try {
     const notes = await NoteModel.find().lean();
     return NextResponse.json(notes);
-  } catch (err) {
+  } catch (error) {
     return NextResponse.json(
       { error: "Failed to fetch notes" },
       { status: 500 }

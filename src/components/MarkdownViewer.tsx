@@ -2,7 +2,6 @@
 import ReactMarkdown from "react-markdown";
 import { Trash2 } from "lucide-react";
 import Fetch from "@/components/Fetch";
-import { useFetch } from "@/hooks/hooks";
 
 interface Note {
   _id: string;
@@ -35,10 +34,8 @@ export const MarkdownViewer = ({ data }: { data: Note[] }) => {
         data.map((note: Note) => (
           <div
             key={note._id}
-            className="relative group rounded-lg border p-4 bg-white shadow-sm"
+            className="relative group p-4 bg-white shadow-sm"
           >
-            <h3 className="font-semibold text-lg mb-2">{note.topic}</h3>
-
             <button
               className="absolute top-3 right-3 p-1.5 text-red-500 hover:bg-red-50 rounded-full"
               aria-label="delete note"

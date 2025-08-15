@@ -13,6 +13,7 @@ function Fetch({
   if (error) return renderError(error);
   if (data) {
     const filtered = filter ? filter(data) : data;
+    console.log("filtered notes: ", filtered);
     return renderSuccess({ data: filtered });
   }
 }

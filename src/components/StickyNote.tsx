@@ -10,9 +10,10 @@ interface Note {
 
 interface StickyNoteGridProps {
   label: string;
+  noteBgColor?: string;
 }
 
-const StickyNoteGrid: React.FC<StickyNoteGridProps> = ({ label }) => {
+const StickyNoteGrid: React.FC<StickyNoteGridProps> = ({ label, noteBgColor='bg-yellow-100' }) => {
   const { notes, loading, addNote, deleteNote } = useNotes(label);
   const [text, setText] = useState("");
 
@@ -48,11 +49,11 @@ const StickyNoteGrid: React.FC<StickyNoteGridProps> = ({ label }) => {
         </div>
 
         {notes.length !== 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
             {notes.map((note: Note) => (
               <div
                 key={note.id}
-                className="relative p-4 bg-yellow-100 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+                className={`relative p-4 ${noteBgColor ?? ""} rounded-lg shadow-md hover:shadow-lg transition-shadow`}
               >
                 <p className="text-gray-800 break-words">{note.text}</p>
                 <button

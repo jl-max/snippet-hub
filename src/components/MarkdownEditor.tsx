@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
-import { Plus, Save } from "lucide-react";
+import { Plus } from "lucide-react";
+import { useFetch } from "@/hooks/hooks";
 
 interface Note {
   topic: string;
@@ -20,6 +21,20 @@ const MarkdownEditor: React.FC = () => {
     topic: options[0],
     content: "",
   });
+  const { execute: doPost } = useFetch(
+    "/api/notes",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        topic: currentItem.topic,
+        content: currentItem.content,
+      }),
+    },
+    true
+  );
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLSelectElement | HTMLTextAreaElement>
@@ -31,25 +46,12 @@ const MarkdownEditor: React.FC = () => {
     }));
   };
 
-  const handleAddItem = async () => {
-    console.log(currentItem.topic);
-    console.log(currentItem.content);
+  const handleAddNote = async () => {
     if (!currentItem.topic || !currentItem.content) return;
 
     try {
-      const response = await fetch("/api/notes", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          topic: currentItem.topic,
-          content: currentItem.content,
-        }),
-      });
-      if (!response.ok) throw new Error("Failed to add.");
-      alert("add successfully!");
-      setCurrentItem({ id: "", topic: "", content: "" });
+      await doPost();
+      setCurrentItem({ topic: "", content: "" });
     } catch (err) {
       console.error("Error saving note:", err);
     }
@@ -99,7 +101,7 @@ const MarkdownEditor: React.FC = () => {
 
         <div className="flex justify-end space-x-2">
           <button
-            onClick={handleAddItem}
+            onClick={handleAddNote}
             className="w-full sm:w-auto px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition flex items-center justify-center"
           >
             <Plus className="mr-1" size={16} />

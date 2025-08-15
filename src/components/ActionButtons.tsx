@@ -2,14 +2,23 @@
 
 import { useRouter } from "next/navigation";
 import { Trash2, Edit3 } from "lucide-react";
+import { useFetch } from "@/hooks/hooks";
 
 export default function ActionButtons({ slug }: { slug: string }) {
   const router = useRouter();
+  const { execute: doDelete } = useFetch(
+    `/api/snippets/${slug}`,
+    { method: "DELETE" },
+    true
+  );
 
   const handleDelete = async () => {
     if (!confirm("Sure to delete?")) return;
-    await fetch(`/api/snippets/${slug}`, { method: "DELETE" });
-    router.push("/");
+    try {
+      await doDelete();
+      router.push("/");
+    } catch {
+    }
   };
 
   const handleEdit = () => router.push(`/edit/${slug}`);
