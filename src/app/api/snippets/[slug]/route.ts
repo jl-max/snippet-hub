@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/db";
 import { SnippetModel } from "@/models/Snippet";
 
-/* GET /api/snippets/:slug   → 查单条详情 */
 export async function GET(
   _req: NextRequest,
   { params }: { params: Promise<{ slug: string }> }
@@ -15,7 +14,6 @@ export async function GET(
   return NextResponse.json(snippet);
 }
 
-/* PUT /api/snippets/:slug   → 更新片段 */
 export async function PUT(
   req: NextRequest,
   { params }: { params: Promise<{ slug: string }> }
@@ -32,7 +30,6 @@ export async function PUT(
   return NextResponse.json(updated);
 }
 
-/* DELETE /api/snippets/:slug → 删除片段 */
 export async function DELETE(
   _req: NextRequest,
   { params }: { params: Promise<{ slug: string }> }

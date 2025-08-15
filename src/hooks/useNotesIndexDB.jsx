@@ -4,7 +4,7 @@ import { IndexedDB } from "@/utils/IndexDB";
 const DB_NAME = "StickyNotesDB";
 const DB_VER = 1;
 
-export default function useNotes(label) {
+export default function useNotesIndexDB(label) {
   const [notes, setNotes] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -17,7 +17,7 @@ export default function useNotes(label) {
         const all = await db.getNotes();
         setNotes(all.filter((n) => n.label === label));
       } catch (err) {
-        console.error("useNotes init error:", err);
+        console.error("useNotesIndexDB init error:", err);
       } finally {
         setLoading(false);
       }
@@ -35,7 +35,7 @@ export default function useNotes(label) {
         await db.addNote(note);
         setNotes((prev) => [...prev, note]);
       } catch (err) {
-        console.error("useNotes add error:", err);
+        console.error("useNotesIndexDB add error:", err);
       }
     },
     [label]
@@ -48,7 +48,7 @@ export default function useNotes(label) {
       await db.deleteNote(id);
       setNotes((prev) => prev.filter((n) => n.id !== id));
     } catch (err) {
-      console.error("useNotes delete error:", err);
+      console.error("useNotesIndexDB delete error:", err);
     }
   }, []);
 
@@ -61,7 +61,7 @@ export default function useNotes(label) {
         prev.map((n) => (n.id === id ? { ...n, text: newText } : n))
       );
     } catch (err) {
-      console.error("useNotes update error:", err);
+      console.error("useNotesIndexDB update error:", err);
     }
   }, []);
 

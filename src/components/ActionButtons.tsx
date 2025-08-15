@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { Trash2, Edit3 } from "lucide-react";
-import { useFetch } from "@/hooks/hooks";
+import { useFetch } from "@/hooks/useFetch";
 
 export default function ActionButtons({ slug }: { slug: string }) {
   const router = useRouter();
@@ -17,8 +17,7 @@ export default function ActionButtons({ slug }: { slug: string }) {
     try {
       await doDelete();
       router.push("/");
-    } catch {
-    }
+    } catch {}
   };
 
   const handleEdit = () => router.push(`/edit/${slug}`);

@@ -1,4 +1,4 @@
-import { useFetch } from "../hooks/hooks";
+import { useFetch } from "../hooks/useFetch";
 
 function Fetch({
   uri,

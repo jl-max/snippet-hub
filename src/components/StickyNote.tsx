@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import useNotes from "@/hooks/useNotes";
+import useNotesIndexDB from "@/hooks/useNotesIndexDB";
 
 interface Note {
   id: string;
@@ -13,8 +13,11 @@ interface StickyNoteGridProps {
   noteBgColor?: string;
 }
 
-const StickyNoteGrid: React.FC<StickyNoteGridProps> = ({ label, noteBgColor='bg-yellow-100' }) => {
-  const { notes, loading, addNote, deleteNote } = useNotes(label);
+const StickyNoteGrid: React.FC<StickyNoteGridProps> = ({
+  label,
+  noteBgColor = "bg-yellow-100",
+}) => {
+  const { notes, loading, addNote, deleteNote } = useNotesIndexDB(label);
   const [text, setText] = useState("");
 
   const handleAdd = () => {
@@ -53,7 +56,9 @@ const StickyNoteGrid: React.FC<StickyNoteGridProps> = ({ label, noteBgColor='bg-
             {notes.map((note: Note) => (
               <div
                 key={note.id}
-                className={`relative p-4 ${noteBgColor ?? ""} rounded-lg shadow-md hover:shadow-lg transition-shadow`}
+                className={`relative p-4 ${
+                  noteBgColor ?? ""
+                } rounded-lg shadow-md hover:shadow-lg transition-shadow`}
               >
                 <p className="text-gray-800 break-words">{note.text}</p>
                 <button

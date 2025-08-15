@@ -1,18 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
 
-export const useInput = (initialValue) => {
-  const [value, setValue] = useState(initialValue);
-
-  return {
-    props: {
-      value,
-      onChange: (e) => setValue(e.target.value),
-    },
-    setValue,
-    reset: () => setValue(initialValue),
-  };
-};
-
 export function useFetch(uri, options = {}, manual = false) {
   const [data, setData] = useState();
   const [error, setError] = useState();

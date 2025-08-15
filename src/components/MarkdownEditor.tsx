@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { Plus } from "lucide-react";
-import { useFetch } from "@/hooks/hooks";
+import { useFetch } from "@/hooks/useFetch";
 
 interface Note {
   topic: string;

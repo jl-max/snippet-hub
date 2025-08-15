@@ -99,20 +99,26 @@ export default function SnippetForm({
 
 const InputField = ({ label, ...props }: any) => (
   <div>
-    <label className="block mb-1 font-medium">{label}</label>
+    <label className="block mb-1 font-medium" htmlFor={label}>
+      {label}
+    </label>
     <input
       {...props}
       className="w-full rounded border border-slate-300 px-3 py-2"
+      id={label}
     />
   </div>
 );
 
 const SelectField = ({ label, children, ...props }: any) => (
   <div>
-    <label className="block mb-1 font-medium">{label}</label>
+    <label className="block mb-1 font-medium" htmlFor={label}>
+      {label}
+    </label>
     <select
       {...props}
       className="w-full rounded border border-slate-300 px-3 py-2"
+      id={label}
     >
       {children}
     </select>
@@ -121,10 +127,13 @@ const SelectField = ({ label, children, ...props }: any) => (
 
 const TextAreaField = ({ label, ...props }: any) => (
   <div>
-    <label className="block mb-1 font-medium">{label}</label>
+    <label className="block mb-1 font-medium" htmlFor={label}>
+      {label}
+    </label>
     <textarea
       {...props}
       className="w-full rounded border border-slate-300 px-3 py-2 font-mono"
+      id={label}
     />
   </div>
 );
