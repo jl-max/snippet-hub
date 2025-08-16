@@ -3,9 +3,11 @@
 import { useRouter } from "next/navigation";
 import { Trash2, Edit3 } from "lucide-react";
 import { useFetch } from "@/hooks/useFetch";
+import { useSWRConfig } from "swr";
 
 export default function ActionButtons({ slug }: { slug: string }) {
   const router = useRouter();
+  const { mutate } = useSWRConfig();
   const { loading, error, execute: doDelete } = useFetch(
     `/api/snippets/${slug}`,
     { method: "DELETE" },
@@ -16,7 +18,8 @@ export default function ActionButtons({ slug }: { slug: string }) {
     if (!confirm("Sure to delete?")) return;
     try {
       await doDelete();
-      router.push("/");
+      mutate("/api/snippets");
+      router.replace("/");
     } catch {
       alert("An error occurred.");
     }

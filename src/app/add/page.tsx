@@ -2,9 +2,11 @@
 import SnippetForm, { SnippetFormData } from "@/components/SnippetForm";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useSWRConfig } from "swr";
 
 export default function AddPage() {
   const router = useRouter();
+  const { mutate } = useSWRConfig();
   const [loading, setLoading] = useState(false);
 
   const handleAdd = async (form: SnippetFormData) => {
@@ -33,6 +35,7 @@ export default function AddPage() {
         setLoading(false);
         return;
       }
+      mutate("/api/snippets");
       router.replace("/");
     } catch (error) {
       alert("An error occurred.");

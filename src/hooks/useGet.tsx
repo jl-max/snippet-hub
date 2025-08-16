@@ -11,3 +11,8 @@ export function useSnippetSWR(slug:string) {
   const { data, error, isLoading } = useSWR(`/api/snippets/${slug}`, fetcher);
   return { snippet: data, error, isLoading };
 }
+
+export function useSnippetsSWR() {
+  const { data, error, isLoading, mutate } = useSWR("/api/snippets", fetcher);
+  return { snippets: data, error, isLoading, mutate };
+}
