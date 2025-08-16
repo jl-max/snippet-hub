@@ -3,6 +3,9 @@ import SnippetCard from "@/components/SnippetCard";
 
 export async function SnippetList() {
   const snippets = await getSnippets();
+
+  console.log(snippets);
+
   return (
     <div>
       {snippets.length === 0 ? (
