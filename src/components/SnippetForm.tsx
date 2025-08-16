@@ -15,12 +15,14 @@ type Props = {
   initialData?: SnippetFormData;
   onSubmit: (data: SnippetFormData) => Promise<void> | void;
   submitText?: string;
+  disabled?: boolean;
 };
 
 export default function SnippetForm({
   initialData,
   onSubmit,
   submitText = "save",
+  disabled,
 }: Props) {
   const [form, setForm] = useState<SnippetFormData>(
     initialData ?? {
@@ -89,6 +91,7 @@ export default function SnippetForm({
 
       <button
         type="submit"
+        disabled={disabled}
         className="rounded bg-indigo-600 px-4 py-2 text-white hover:bg-indigo-700"
       >
         {submitText}

@@ -3,15 +3,7 @@ import { connectDB } from "@/lib/db";
 import { SnippetModel } from "@/models/Snippet";
 import CodeBlock from "@/components/CodeBlock";
 import ActionButtons from "@/components/ActionButtons";
-
-interface Snippet {
-  title: string;
-  description: string;
-  tags: string[];
-  language: string;
-  code: string;
-  slug: string;
-}
+import { Snippet } from "@/interface/interfaces";
 
 export default async function SnippetPage({
   params,

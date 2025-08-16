@@ -1,24 +1,13 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { SnippetModel } from "@/models/Snippet";
 import { connectDB } from "@/lib/db";
 import SnippetCard from "@/components/SnippetCard";
 import Link from "next/link";
 import { Plus } from "lucide-react";
+import { Snippet } from "@/interface/interfaces";
 
 export default async function HomePage() {
   await connectDB();
-  const rawSnippets = await SnippetModel.find().lean();
-  const snippets: import("@/lib/snippets").Snippet[] = rawSnippets.map(
-    (s: any) => ({
-      slug: s.slug,
-      title: s.title,
-      language: s.language,
-      description: s.description,
-      tags: s.tags,
-      code: s.code,
-    })
-  );
-  // const snippets = getAllSnippets();
+  const snippets: Snippet[] = await SnippetModel.find().lean<Snippet[]>();
 
   return (
     <main className="max-w-4xl mx-auto p-6">

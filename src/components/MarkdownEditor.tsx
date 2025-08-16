@@ -22,7 +22,11 @@ const MarkdownEditor: React.FC = () => {
     topic: options[0],
     content: "",
   });
-  const { execute: doPost } = useFetch(
+  const {
+    loading,
+    error,
+    execute: doPost,
+  } = useFetch(
     "/api/notes",
     {
       method: "POST",
@@ -48,7 +52,10 @@ const MarkdownEditor: React.FC = () => {
   };
 
   const handleAddNote = async () => {
-    if (!currentItem.topic || !currentItem.content) return;
+    if (!currentItem.content?.trim()) {
+      alert("Content required.");
+      return;
+    }
 
     try {
       await doPost();
@@ -93,6 +100,7 @@ const MarkdownEditor: React.FC = () => {
           <textarea
             id="content"
             name="content"
+            required
             value={currentItem.content}
             onChange={handleInputChange}
             className="w-full h-32 sm:h-40 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -102,13 +110,18 @@ const MarkdownEditor: React.FC = () => {
 
         <div className="flex justify-end space-x-2">
           <button
+            type="button"
+            aria-label="Add note"
             onClick={handleAddNote}
+            disabled={loading}
             className="w-full sm:w-auto px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition flex items-center justify-center"
           >
             <Plus className="mr-1" size={16} />
-            add
+            {loading ? "adding..." : "add"}
           </button>
         </div>
+
+        {error && <span className="text-red-600 ml-2 text-sm">{error}</span>}
       </div>
     </div>
   );

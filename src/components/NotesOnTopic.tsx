@@ -1,5 +1,5 @@
-'use client'
-import { useNotesSWR } from "@/hooks/useNotesSWR";
+"use client";
+import { useNotesSWR } from "@/hooks/useGet";
 import { NoteList } from "@/components/NoteList";
 
 interface Note {

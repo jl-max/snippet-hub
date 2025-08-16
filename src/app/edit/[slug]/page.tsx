@@ -1,26 +1,14 @@
 "use client";
-import { useEffect, useState } from "react";
 import SnippetForm, { SnippetFormData } from "@/components/SnippetForm";
 import { useRouter, useParams } from "next/navigation";
+import { useState } from "react";
+import { useSnippetSWR } from "@/hooks/useGet";
 
 export default function EditPage() {
   const router = useRouter();
   const { slug } = useParams() as { slug: string };
-  const [initial, setInitial] = useState<SnippetFormData | null>(null);
-
-  useEffect(() => {
-    fetch(`/api/snippets/${slug}`)
-      .then((r) => r.json())
-      .then((d) =>
-        setInitial({
-          title: d.title,
-          language: d.language,
-          tags: d.tags?.join(", ") ?? "",
-          description: d.description ?? "",
-          code: d.code,
-        })
-      );
-  }, [slug]);
+  const { snippet, error, isLoading } = useSnippetSWR(slug);
+  const [saving, setSaving] = useState(false);
 
   const handleSave = async (form: SnippetFormData) => {
     const payload = {
@@ -30,15 +18,31 @@ export default function EditPage() {
         .map((t) => t.trim())
         .filter((t) => t),
     };
-    await fetch(`/api/snippets/${slug}`, {
+    setSaving(true);
+    const res = await fetch(`/api/snippets/${slug}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     });
-    router.replace(`/snippets/${slug}`);
+    setSaving(false);
+    if (res.ok) {
+      router.replace(`/snippets/${slug}`);
+    } else {
+      alert("Failed to save snippet.");
+    }
   };
 
-  if (!initial) return <p className="p-6">loading…</p>;
+  if (isLoading) return <p className="p-6">loading…</p>;
+  if (error) return <p className="p-6 text-red-600">Error loading snippet.</p>;
+  if (!snippet) return null;
+
+  const initial: SnippetFormData = {
+    title: snippet.title,
+    language: snippet.language,
+    tags: snippet.tags?.join(", ") ?? "",
+    description: snippet.description ?? "",
+    code: snippet.code,
+  };
 
   return (
     <main className="max-w-2xl mx-auto p-6">
@@ -46,7 +50,8 @@ export default function EditPage() {
       <SnippetForm
         initialData={initial}
         onSubmit={handleSave}
-        submitText="save"
+        submitText={saving ? "Saving..." : "save"}
+        disabled={saving}
       />
     </main>
   );
