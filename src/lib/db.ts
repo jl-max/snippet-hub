@@ -28,8 +28,8 @@ export const getSnippet = cache(async (slug: string) => {
   return snippet;
 });
 
-export const getSnippets = cache(async () => {
+export const getSnippets = async() => {
   await connectDB();
   const snippets: Snippet[] = await SnippetModel.find().lean<Snippet[]>();
   return snippets;
-});
+};
