@@ -1,9 +1,7 @@
 import { notFound } from "next/navigation";
-import { connectDB } from "@/lib/db";
-import { SnippetModel } from "@/models/Snippet";
 import CodeBlock from "@/components/CodeBlock";
 import ActionButtons from "@/components/ActionButtons";
-import { Snippet } from "@/interface/interfaces";
+import { getSnippet } from "@/lib/db";
 
 export default async function SnippetPage({
   params,
@@ -11,9 +9,7 @@ export default async function SnippetPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  await connectDB();
-  const snippet = await SnippetModel.findOne({ slug }).lean<Snippet>();
-
+  const snippet = await getSnippet(slug);
   if (!snippet) notFound();
 
   return (

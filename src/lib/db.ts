@@ -1,4 +1,7 @@
 import mongoose from "mongoose";
+import { cache } from "react";
+import { Snippet } from "@/interface/interfaces";
+import { SnippetModel } from "@/models/Snippet";
 
 const MONGODB_URI = process.env.MONGODB_URI!;
 
@@ -18,3 +21,15 @@ export async function connectDB() {
   cached.conn = await cached.promise;
   return cached.conn;
 }
+
+export const getSnippet = cache(async (slug: string) => {
+  await connectDB();
+  const snippet = await SnippetModel.findOne({ slug }).lean<Snippet>();
+  return snippet;
+});
+
+export const getSnippets = cache(async () => {
+  await connectDB();
+  const snippets: Snippet[] = await SnippetModel.find().lean<Snippet[]>();
+  return snippets;
+});

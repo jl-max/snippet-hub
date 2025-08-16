@@ -1,13 +1,10 @@
-import { SnippetModel } from "@/models/Snippet";
-import { connectDB } from "@/lib/db";
-import SnippetCard from "@/components/SnippetCard";
 import Link from "next/link";
 import { Plus } from "lucide-react";
-import { Snippet } from "@/interface/interfaces";
+import { getSnippets } from "@/lib/db";
+import SnippetCard from "@/components/SnippetCard";
 
 export default async function HomePage() {
-  await connectDB();
-  const snippets: Snippet[] = await SnippetModel.find().lean<Snippet[]>();
+  const snippets = await getSnippets();
 
   return (
     <main className="max-w-4xl mx-auto p-6">
