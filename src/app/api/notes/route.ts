@@ -18,7 +18,19 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
   await connectDB();
-  const { topic, content } = await req.json();
+  const body = await req.json().catch(() => null);
+  if (
+    !body ||
+    typeof body.topic !== "string" ||
+    typeof body.content !== "string"
+  ) {
+    return NextResponse.json(
+      { error: "Invalid JSON or missing fields" },
+      { status: 400 }
+    );
+  }
+
+  const { topic, content } = body;
 
   try {
     const created = await NoteModel.create({ topic, content });

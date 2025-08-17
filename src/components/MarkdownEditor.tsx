@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Plus } from "lucide-react";
 import { useFetch } from "@/hooks/useFetch";
 
@@ -22,6 +22,7 @@ const MarkdownEditor: React.FC = () => {
     topic: options[0],
     content: "",
   });
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
   const {
     loading,
     error,
@@ -59,7 +60,8 @@ const MarkdownEditor: React.FC = () => {
 
     try {
       await doPost();
-      setCurrentItem({ topic: "", content: "" });
+      setCurrentItem({ topic: options[0], content: "" });
+      textareaRef.current?.focus();
     } catch (err) {
       console.error("Error saving note:", err);
     }
@@ -98,6 +100,7 @@ const MarkdownEditor: React.FC = () => {
             content
           </label>
           <textarea
+            ref={textareaRef}
             id="content"
             name="content"
             required
@@ -105,6 +108,7 @@ const MarkdownEditor: React.FC = () => {
             onChange={handleInputChange}
             className="w-full h-32 sm:h-40 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="input content..."
+            autoFocus
           />
         </div>
 

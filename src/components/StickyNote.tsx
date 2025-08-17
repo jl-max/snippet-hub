@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import useNotesIndexDB from "@/hooks/useNotesIndexDB";
 
 interface Note {
@@ -19,10 +19,19 @@ const StickyNoteGrid: React.FC<StickyNoteGridProps> = ({
 }) => {
   const { notes, loading, addNote, deleteNote } = useNotesIndexDB(label);
   const [text, setText] = useState("");
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleAdd = () => {
     addNote(text);
     setText("");
+    textareaRef.current?.focus();
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleAdd();
+    }
   };
 
   if (loading) return <p className="p-8">Loading…</p>;
@@ -38,10 +47,13 @@ const StickyNoteGrid: React.FC<StickyNoteGridProps> = ({
 
         <div className="mb-8 flex gap-2">
           <textarea
+            ref={textareaRef}
             value={text}
             onChange={(e) => setText(e.target.value)}
             placeholder="Note down what you easily forget here..."
             className="flex-1 p-2 border rounded"
+            onKeyDown={handleKeyDown}
+            autoFocus
           />
           <button
             onClick={handleAdd}
