@@ -15,7 +15,7 @@ export default async function SnippetPage({
   return (
     <main className="max-w-3xl mx-auto p-6">
       <h1 className="text-2xl font-bold mb-2">{snippet.title}</h1>
-      <p className="mb-4 text-slate-600">{snippet.description}</p>
+      <pre className="mb-4 text-slate-600">{snippet.description}</pre>
 
       <div className="mb-4 flex gap-2">
         {snippet.tags.map((t) => (

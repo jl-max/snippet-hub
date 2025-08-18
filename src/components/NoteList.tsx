@@ -1,5 +1,4 @@
 "use client";
-import ReactMarkdown from "react-markdown";
 import { Trash2 } from "lucide-react";
 
 interface Note {
@@ -47,7 +46,7 @@ export const NoteBlock = ({
     <div key={note._id} className="flex items-top p-4 bg-white shadow-sm">
       <div>
         <div className="max-w-none mt-3">
-          <ReactMarkdown>{note.content}</ReactMarkdown>
+          <pre>{note.content}</pre>
         </div>
 
         {note.createdAt && (
