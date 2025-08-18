@@ -64,7 +64,7 @@ const StickyNoteGrid: React.FC<StickyNoteGridProps> = ({
         </div>
 
         {notes.length !== 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
             {notes.map((note: Note) => (
               <div
                 key={note.id}
@@ -72,7 +72,7 @@ const StickyNoteGrid: React.FC<StickyNoteGridProps> = ({
                   noteBgColor ?? ""
                 } rounded-lg shadow-md hover:shadow-lg transition-shadow`}
               >
-                <p className="text-gray-800 break-words">{note.text}</p>
+                <pre className="text-gray-800 break-words">{note.text}</pre>
                 <button
                   onClick={() => deleteNote(note.id)}
                   className="absolute top-1 right-1 w-6 h-6 flex items-center justify-center text-gray-500 hover:text-red-500 transition-colors"
