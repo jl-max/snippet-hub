@@ -72,7 +72,7 @@ const StickyNoteGrid: React.FC<StickyNoteGridProps> = ({
                   noteBgColor ?? ""
                 } rounded-lg shadow-md hover:shadow-lg transition-shadow`}
               >
-                <pre className="text-gray-800 break-words">{note.text}</pre>
+                <pre className="text-gray-800 whitespace-pre-wrap break-words">{note.text}</pre>
                 <button
                   onClick={() => deleteNote(note.id)}
                   className="absolute top-1 right-1 w-6 h-6 flex items-center justify-center text-gray-500 hover:text-red-500 transition-colors"

@@ -46,7 +46,7 @@ export const NoteBlock = ({
     <div key={note._id} className="flex items-top p-4 bg-white shadow-sm">
       <div>
         <div className="max-w-none mt-3">
-          <pre>{note.content}</pre>
+          <pre className="whitespace-pre-wrap break-words">{note.content}</pre>
         </div>
 
         {note.createdAt && (
